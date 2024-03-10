@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require ('cors');
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const connectDB = require("./config/dbconfig");
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());       // is used for parsing the body express,json enable our server to read data coming from the body
 connectDB();
 
@@ -33,9 +35,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/wishlist", wishlistRouter);
 
 
-mongoose.connection.once("open", ()=>{
-    console.log("Connected to DB");
+
 app.listen(process.env.PORT || PORT, () => {
     console.log(" Server is UP and Running")
 }) 
-})
